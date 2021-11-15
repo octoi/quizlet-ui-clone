@@ -1,3 +1,4 @@
+import 'package:app/widgets/item_card.dart';
 import 'package:flutter/material.dart';
 
 // colors

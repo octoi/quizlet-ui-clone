@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 
 class ScrollList extends StatelessWidget {
   final String title;
-  const ScrollList({Key? key, required this.title}) : super(key: key);
+  final ItemCard card;
+  final int length;
+  const ScrollList({
+    Key? key,
+    required this.title,
+    required this.card,
+    this.length = 10,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +55,7 @@ class ScrollList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
           child: Row(
-            children: [
-              ItemCard(
-                title: 'bacterial deseases',
-                description: '16 terms',
-                // showHugeTitle: true,
-                // showFolderIcon: true,
-                // showMoreIcon: true,
-              ),
-            ],
+            children: [for (int i = 0; i < length; i++) card],
           ),
         )
       ],
