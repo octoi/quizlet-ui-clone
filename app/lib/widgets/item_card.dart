@@ -8,6 +8,7 @@ class ItemCard extends StatelessWidget {
   final bool showFolderIcon;
   final bool showMoreIcon;
   final bool showHugeTitle;
+  final bool showRecommended;
 
   const ItemCard({
     Key? key,
@@ -17,82 +18,126 @@ class ItemCard extends StatelessWidget {
     this.showFolderIcon = false,
     this.showMoreIcon = false,
     this.showHugeTitle = false,
+    this.showRecommended = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: appSecondaryColor,
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      width: 300.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (showFolderIcon)
-            Column(
-              children: [
-                Icon(
-                  Icons.folder,
-                  color: Colors.grey,
-                  size: 30.0,
-                ),
-                SizedBox(height: 20.0),
-              ],
-            ),
-          Text(
-            title,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: showHugeTitle ? 22.0 : 18.0,
-              fontWeight: FontWeight.w600,
-            ),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: appSecondaryColor,
+            borderRadius: BorderRadius.circular(5.0),
           ),
-          if (description != null)
-            Column(
-              children: [
-                const SizedBox(height: 10.0),
-                Text(
-                  description!,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 15.0,
-                  ),
-                ),
-              ],
-            ),
-          const SizedBox(height: 20.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          padding: const EdgeInsets.all(20.0),
+          margin: const EdgeInsets.only(right: 10.0),
+          width: image == null ? 300.0 : 320.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: const [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(rickImage),
-                    radius: 15.0,
-                  ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'Rick Astley',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+              if (showRecommended) const SizedBox(height: 10.0),
+              if (showFolderIcon)
+                Column(
+                  children: const [
+                    Icon(
+                      Icons.folder,
+                      color: Colors.grey,
+                      size: 30.0,
                     ),
-                  )
+                    SizedBox(height: 20.0),
+                  ],
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (image != null) const SizedBox(height: 10.0),
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: showHugeTitle ? 22.0 : 18.0,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (description != null)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10.0),
+                            Text(
+                              description!,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                  if (image != null)
+                    SizedBox(
+                      height: 80.0,
+                      width: 80.0,
+                      child: Image.network(
+                        image!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                 ],
               ),
-              if (showMoreIcon)
-                const Icon(
-                  Icons.more_vert,
-                  color: Colors.white,
-                  size: 15.0,
-                ),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: const [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(rickImage),
+                        radius: 15.0,
+                      ),
+                      SizedBox(width: 10.0),
+                      Text(
+                        'Rick Astley',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      )
+                    ],
+                  ),
+                  if (showMoreIcon)
+                    const Icon(
+                      Icons.more_vert,
+                      color: Colors.white,
+                      size: 15.0,
+                    ),
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        if (showRecommended)
+          Positioned(
+            left: 5.0,
+            top: 5.0,
+            child: Container(
+              padding: const EdgeInsets.all(5.0),
+              decoration: BoxDecoration(
+                color: appGreen,
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              child: const Text(
+                'RECOMMENDED',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
