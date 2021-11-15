@@ -45,7 +45,7 @@ class ItemCard extends StatelessWidget {
                       color: Colors.grey,
                       size: 30.0,
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 10.0),
                   ],
                 ),
               Row(
